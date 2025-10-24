@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Checkout from Git') {
             steps {
-                git branch: 'main', credentialsId: 'GITHUB', url: 'https://github.com/dev-sd092/DevOps-capstone-project.git'
+                git branch: 'main', credentialsId: 'GITHUB', url: 'https://github.com/dev-sd092/MERN-app-deployment.git'
             }
         }
         stage('Sonarqube Analysis') {
@@ -30,8 +30,8 @@ pipeline {
                         -Dsonar.projectName=three-tier-frontend \
                         -Dsonar.projectKey=three-tier-frontend \
 			-Dsonar.sources=. \
-  			-Dsonar.host.url=http://15.206.74.102:9000 \
-  			-Dsonar.login=squ_66d94e676e42ded3db51ffea243e81c48a44795f '''
+			-Dsonar.host.url=http://15.206.74.102:9000 \
+                        -Dsonar.login=squ_66d94e676e42ded3db51ffea243e81c48a44795f '''
                     }
                 }
             }
@@ -85,16 +85,16 @@ pipeline {
         }
         stage('Checkout Code') {
             steps {
-                git branch: 'main', credentialsId: 'GITHUB', url: 'https://github.com/dev-sd092/DevOps-capstone-project.git'
+                git branch: 'main', credentialsId: 'GITHUB', url: 'https://github.com/dev-sd092/MERN-app-deployment.git'
             }
         }
         stage('Update Deployment file') {
             environment {
-                GIT_REPO_NAME = "DevOps-capstone-project"
+                GIT_REPO_NAME = "MERN-app-deployment"
                 GIT_USER_NAME = "dev-sd092"
             }
             steps {
-                dir('Kubernetes-Manifests-file/Frontend') {
+                dir('k8s-Manifests/Frontend') {
                     withCredentials([string(credentialsId: 'github-read-write-token', variable: 'GITHUB_TOKEN')]) {
                         sh '''
                             git config user.email "sanketdesai092@gmail.com"
