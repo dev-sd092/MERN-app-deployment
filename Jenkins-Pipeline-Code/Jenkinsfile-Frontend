@@ -29,9 +29,9 @@ pipeline {
                         sh ''' $SCANNER_HOME/bin/sonar-scanner \
                         -Dsonar.projectName=three-tier-frontend \
                         -Dsonar.projectKey=three-tier-frontend \
-						-Dsonar.sources=. \
-						-Dsonar.host.url=http://15.206.74.102:9000 \
-                        -Dsonar.login=squ_66d94e676e42ded3db51ffea243e81c48a44795f '''
+  						-Dsonar.sources=. \
+  						-Dsonar.host.url=http://3.110.130.217:9000 \
+  						-Dsonar.login=squ_2ce48ee208497bebdef12509b6273410cd509c1a '''
                     }
                 }
             }
