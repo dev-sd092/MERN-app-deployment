@@ -95,7 +95,7 @@ pipeline {
             }
             steps {
                 dir('k8s-menifests/Frontend') {
-                    withCredentials([string(credentialsId: 'github-read-write-token', variable: 'GITHUB_TOKEN')]) {
+                    withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                         sh '''
                             git config user.email "sanketdesai092@gmail.com"
                             git config user.name "dev-sd092"
