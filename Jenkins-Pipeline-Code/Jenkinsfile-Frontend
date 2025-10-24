@@ -9,7 +9,7 @@ pipeline {
         AWS_ACCOUNT_ID = credentials('ACCOUNT_ID')
         AWS_ECR_REPO_NAME = credentials('ECR_REPO1')
         AWS_DEFAULT_REGION = 'ap-south-1'
-        REPOSITORY_URI = "${ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/"
+        REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/"
     }
     stages {
         stage('Cleaning Workspace') {
@@ -29,8 +29,8 @@ pipeline {
                         sh ''' $SCANNER_HOME/bin/sonar-scanner \
                         -Dsonar.projectName=three-tier-frontend \
                         -Dsonar.projectKey=three-tier-frontend \
-			-Dsonar.sources=. \
-			-Dsonar.host.url=http://15.206.74.102:9000 \
+						-Dsonar.sources=. \
+						-Dsonar.host.url=http://15.206.74.102:9000 \
                         -Dsonar.login=squ_66d94e676e42ded3db51ffea243e81c48a44795f '''
                     }
                 }
