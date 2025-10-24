@@ -42,6 +42,13 @@ terraform validate
 terraform plan --var-file=terraform.tfvars
 terraform apply --var-file=terraform.tfvars --auto-approve
 ```
+<img width="1090" height="369" alt="image" src="https://github.com/user-attachments/assets/a005f8bf-10a1-4c18-b299-9861bfb16307" />
+<img width="1526" height="541" alt="image" src="https://github.com/user-attachments/assets/3dfd838e-25b2-49e5-babb-c3b0aa5f9111" />
+<img width="1528" height="343" alt="image" src="https://github.com/user-attachments/assets/50cce306-17b1-4e4d-9dcd-61c22366d026" />
+
+<img width="1287" height="491" alt="image" src="https://github.com/user-attachments/assets/4f0efb57-745c-480b-bc27-b0a77167741e" />
+<img width="1666" height="364" alt="image" src="https://github.com/user-attachments/assets/87b4cd1e-a0b5-4053-af29-656df287e55c" />
+
 
 This provisions the required AWS resources for the application infrastructure.
 
@@ -63,6 +70,11 @@ Start Jenkins and install suggested plugins. Login with:
 - **Password:** `admin`
 
 ---
+<img width="1919" height="620" alt="image" src="https://github.com/user-attachments/assets/219f3ac1-fe0c-49b5-9a7a-71c2ff56a39a" />
+<img width="1918" height="1025" alt="image" src="https://github.com/user-attachments/assets/f39cf0b7-3de8-4c48-b83d-69be9e5253e0" />
+<img width="1919" height="573" alt="image" src="https://github.com/user-attachments/assets/4ee481cf-2865-468e-9b57-4f1d8fa1096a" />
+<img width="1919" height="897" alt="Screenshot 2025-10-24 170814" src="https://github.com/user-attachments/assets/cd8c1647-d677-41b0-a9fc-849ff18fdc65" />
+<img width="1905" height="904" alt="Screenshot 2025-10-24 170835" src="https://github.com/user-attachments/assets/cd178cfe-be44-4cf2-86d9-56630b1aaf0c" />
 
 ### 3. AWS Configuration and Jenkins Integration
 
@@ -93,6 +105,8 @@ Create EKS Cluster:
 eksctl create cluster --name Three-Tier-EKS-Cluster --region ap-south-1 --node-type t2.medium --nodes-min 2 --nodes-max 2
 aws eks update-kubeconfig --region ap-south-1 --name Three-Tier-EKS-Cluster
 ```
+<img width="1905" height="459" alt="image" src="https://github.com/user-attachments/assets/40e81595-338e-4fe7-b4a0-3fa04d9ce30c" />
+<img width="1006" height="75" alt="image" src="https://github.com/user-attachments/assets/166be43d-77a3-4277-88cd-9b9cc5e6d53f" />
 
 ---
 
@@ -122,6 +136,7 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n ku
 --set serviceAccount.create=false \
 --set serviceAccount.name=aws-load-balancer-controller
 ```
+<img width="1778" height="342" alt="image" src="https://github.com/user-attachments/assets/ad484a41-0d0c-4c6c-b069-7eefb4e6e62a" />
 
 ---
 
@@ -130,12 +145,16 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n ku
 Create two private repositories in Amazon ECR:
 - `frontend`
 - `backend`
+<img width="1668" height="433" alt="image" src="https://github.com/user-attachments/assets/9719b5b2-9569-4bd8-9097-b76903bec2bc" />
+<img width="1917" height="536" alt="image" src="https://github.com/user-attachments/assets/19e6b925-0fe2-426d-84ce-60c18dc37b89" />
+<img width="1909" height="519" alt="image" src="https://github.com/user-attachments/assets/32b0850d-e344-4e72-a4f0-a101e7716220" />
 
 Configure Docker authentication with ECR:
 
 ```bash
 aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.ap-south-1.amazonaws.com
 ```
+<img width="1647" height="133" alt="image" src="https://github.com/user-attachments/assets/d7f8c313-36d0-45a2-8600-36d5c266e4b0" />
 
 ---
 
@@ -174,11 +193,14 @@ echo $ARGO_PWD
 
 Access ArgoCD UI using the LoadBalancer DNS and default username `admin`.
 
+<img width="1919" height="1079" alt="Screenshot 2025-10-08 033253" src="https://github.com/user-attachments/assets/055f1cff-962f-425a-8363-0a60e3be28f0" />
+
 Create ArgoCD projects for:
 - frontend
 - backend
 - database
 - ingress
+<img width="1919" height="625" alt="image" src="https://github.com/user-attachments/assets/36b8be18-13d4-482f-ba82-328adf6c9200" />
 
 Each project points to respective manifest directories.
 
@@ -193,6 +215,9 @@ Default credentials: `admin` / `admin`
 - Create tokens for both frontend and backend projects
 - Configure webhooks and Jenkins integration
 - Add SonarQube token in Jenkins credentials
+<img width="1918" height="701" alt="image" src="https://github.com/user-attachments/assets/a3b99736-4c4f-4bf3-b5c1-6ad47cb51068" />
+<img width="1896" height="1024" alt="image" src="https://github.com/user-attachments/assets/40410468-6383-48e6-9896-3fd3572ea6d3" />
+<img width="1462" height="582" alt="image" src="https://github.com/user-attachments/assets/3f3a80c8-48d5-4980-ba90-79dca720a728" />
 
 ---
 
@@ -208,51 +233,11 @@ Each pipeline uses the same repo, but updates different manifest files for front
 5. Push to ECR
 6. Update Manifest File
 7. ArgoCD Deployment
-
 ---
 
-### 11. Monitoring Setup (Prometheus & Grafana)
-
-Install Prometheus and Grafana:
-
-```bash
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo add grafana https://grafana.github.io/helm-charts
-helm repo update
-helm install stable prometheus-community/kube-prometheus-stack
-```
-
-Expose both services:
-
-```bash
-kubectl edit svc stable-kube-prometheus-sta-prometheus
-kubectl edit svc stable-grafana
-```
-
-Change `type: ClusterIP` → `type: LoadBalancer`.
-
-Get credentials:
-
-```bash
-kubectl get secret stable-grafana -o jsonpath="{.data.admin-user}" | base64 --decode; echo
-kubectl get secret stable-grafana -o jsonpath="{.data.admin-password}" | base64 --decode; echo
-```
-
-Access Grafana UI via LoadBalancer and integrate Prometheus as a data source.
-
----
-
-## 📊 Final Architecture Flow
-
-```
-Developer → GitHub → Jenkins CI/CD → ECR → ArgoCD (GitOps) → EKS Cluster
-                                    ↓
-                              Trivy + SonarQube
-                                    ↓
-                         Prometheus + Grafana (Monitoring)
-```
-
----
+**Final Output**
+<img width="1919" height="1035" alt="image" src="https://github.com/user-attachments/assets/65f36d82-973c-41eb-a68c-d71608cc14d4" />
+<img width="852" height="457" alt="image" src="https://github.com/user-attachments/assets/829e301c-db6f-4ede-a77a-3105bc0ccaed" />
 
 ## 🏆 Features Achieved
 
@@ -270,22 +255,6 @@ Developer → GitHub → Jenkins CI/CD → ECR → ArgoCD (GitOps) → EKS Clust
 **Sanket Prakash Desai**  
 DevOps Engineer | AWS | CI/CD | Kubernetes | Terraform
 
-🔗 [GitHub](https://github.com/sanketdesai) | 💼 [Project Repository](https://github.com/sanketdesai/MERN-app-deployment)
+🔗 [GitHub](https://github.com/dev-sd092) | 💼 [Project Repository](https://github.com/dev-sd092/MERN-app-deployment)
 
 ---
-
-## 📝 License
-
-This project is open-source and available under the [MIT License](LICENSE).
-
----
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/sanketdesai/MERN-app-deployment/issues).
-
----
-
-## ⭐ Show your support
-
-Give a ⭐️ if this project helped you!
