@@ -2,9 +2,9 @@
 
 ## 📘 Overview
 
-This project demonstrates a complete DevSecOps pipeline to deploy a MERN (MongoDB, Express, React, Node.js) application on AWS EKS using a combination of Terraform, Jenkins, ArgoCD, SonarQube, Trivy, Prometheus, and Grafana.
+This project demonstrates a complete DevSecOps pipeline to deploy a MERN (MongoDB, Express, React, Node.js) application on AWS EKS using a combination of Terraform, Jenkins, ArgoCD, SonarQube, Trivy.
 
-The goal is to automate infrastructure provisioning, continuous integration, delivery, security scanning, and monitoring — all following modern industry practices.
+The goal is to automate infrastructure provisioning, continuous integration, delivery, security scanning — all following modern industry practices.
 
 ---
 
@@ -21,7 +21,6 @@ The goal is to automate infrastructure provisioning, continuous integration, del
 | **CI/CD** | Jenkins, ArgoCD |
 | **Version Control** | GitHub |
 | **Security** | SonarQube (code quality), Trivy (image scanning) |
-| **Monitoring** | Prometheus, Grafana |
 | **Load Balancing** | AWS Load Balancer Controller |
 | **Registry** | Amazon ECR |
 
